@@ -11,7 +11,6 @@ import java.util.List;
 import it.prova.gestionecompagnia.dao.AbstractMySQLDAO;
 import it.prova.gestionecompagnia.model.Compagnia;
 import it.prova.gestionecompagnia.model.Impiegato;
-import it.prova.model.User;
 
 public class ImpiegatoDAOImpl  extends AbstractMySQLDAO implements ImpiegatoDAO{
 	// la connection stavolta fa parte del this, quindi deve essere 'iniettata'
@@ -210,6 +209,30 @@ public class ImpiegatoDAOImpl  extends AbstractMySQLDAO implements ImpiegatoDAO{
 			}
 			return result;
 			
+		}
+
+		@Override
+		public List<Impiegato> findAllByCompagnia(Compagnia compagniaInput) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int countByDataFondazioneCompagniaGreaterThan(java.util.Date dataInput) throws Exception {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Impiegato> findAllByCompagniaConFatturatoMaggioreDi(int fatturatoInput) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Impiegato> findAllErroriAssunzione() throws Exception {
+			// TODO Auto-generated method stub
+			return null;
 		}
 		
 		

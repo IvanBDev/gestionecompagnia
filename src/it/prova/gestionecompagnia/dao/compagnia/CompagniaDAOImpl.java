@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.prova.gestionecompagnia.connection.MyConnection;
 import it.prova.gestionecompagnia.dao.AbstractMySQLDAO;
 import it.prova.gestionecompagnia.model.Compagnia;
 
@@ -191,6 +190,24 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 		
 		return result;
 		
+	}
+
+	@Override
+	public List<Compagnia> findAllByDataAssunzioneMaggioreDi(java.util.Date dataInput) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Compagnia> findAllByRagioneSocialeContiene(String stringaInput) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Compagnia> findAllCodiceFiscaleImpiegatoContiene(String codiceFiscale) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
