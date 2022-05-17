@@ -128,13 +128,14 @@ public class ImpiegatoDAOImpl  extends AbstractMySQLDAO implements ImpiegatoDAO{
 
 			int result = 0;
 			try (PreparedStatement ps = connection.prepareStatement(
-					"UPDATE impiegato SET nome = ?, cognome = ?, codiceFiscale = ?, dataNascita = ?, dataAssunzione=? where id=?;")) {
+					"UPDATE impiegato SET nome = ?, cognome = ?, codiceFiscale = ?, dataNascita = ?, dataAssunzione=?, id_compagnia = ? WHERE id=?;")) {
 				ps.setString(1, impiegatoInput.getNome());
 				ps.setString(2, impiegatoInput.getCognome());
 				ps.setString(3, impiegatoInput.getCodiceFiscale());
 				ps.setDate(4, new java.sql.Date(impiegatoInput.getDataNascita().getTime()));
 				ps.setDate(5, new java.sql.Date(impiegatoInput.getDataAssunzione().getTime()));
 				ps.setLong(6, impiegatoInput.getCompagnia().getId());
+				ps.setLong(7, impiegatoInput.getId());
 				result = ps.executeUpdate();
 			} catch (Exception e) {
 				e.printStackTrace();

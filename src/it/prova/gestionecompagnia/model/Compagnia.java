@@ -22,6 +22,14 @@ public class Compagnia {
 		this.dataFondazione = dataFondazione;
 	}
 
+	public Compagnia(Long id, String ragioneSociale, int fattualeAnnuo, Date dataFondazione) {
+		super();
+		this.id = id;
+		this.ragioneSociale = ragioneSociale;
+		this.fattualeAnnuo = fattualeAnnuo;
+		this.dataFondazione = dataFondazione;
+	}
+
 	public Compagnia(String ragioneSociale, int fattualeAnnuo, Date dataFondazione, List<Impiegato> impiegato) {
 		super();
 		this.ragioneSociale = ragioneSociale;
