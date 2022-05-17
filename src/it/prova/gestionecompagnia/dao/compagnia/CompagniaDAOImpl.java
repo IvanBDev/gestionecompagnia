@@ -11,7 +11,6 @@ import java.util.List;
 import it.prova.gestionecompagnia.connection.MyConnection;
 import it.prova.gestionecompagnia.dao.AbstractMySQLDAO;
 import it.prova.gestionecompagnia.model.Compagnia;
-import it.prova.model.User;
 
 public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 	// la connection stavolta fa parte del this, quindi deve essere 'iniettata'
@@ -189,9 +188,11 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 			e.printStackTrace();
 			throw e;
 		}
+		
 		return result;
-
+		
 	}
+	
 	
 	
 	

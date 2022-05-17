@@ -10,18 +10,33 @@ public class Impiegato {
 	private String codiceFiscale;
 	private Date dataNascita;
 	private Date dataAssunzione;
-	
+	private Compagnia compagnia;
+
 	public Impiegato() {
 		super();
 	}
 
-	public Impiegato(String nome, String cognome, String codiceFiscale, Date dataNascita, Date dataAssunzione) {
+	public Impiegato(String nome, String cognome, String codiceFiscale, Date dataNascita, Date dataAssunzione,
+			Compagnia compagnia) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = codiceFiscale;
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
+		this.compagnia = compagnia;
+	}
+
+	public Impiegato(Long id, String nome, String cognome, String codiceFiscale, Date dataNascita, Date dataAssunzione,
+			Compagnia compagnia) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale = codiceFiscale;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+		this.compagnia = compagnia;
 	}
 
 	public Long getId() {
@@ -71,7 +86,15 @@ public class Impiegato {
 	public void setDataAssunzione(Date dataAssunzione) {
 		this.dataAssunzione = dataAssunzione;
 	}
-	
+
+	public Compagnia getCompagnia() {
+		return compagnia;
+	}
+
+	public void setCompagnia(Compagnia compagnia) {
+		this.compagnia = compagnia;
+	}
+
 	@Override
 	public String toString() {
 		String dataNascitaString = dataNascita != null ? new SimpleDateFormat("dd/MM/yyyy").format(dataNascita)
@@ -79,6 +102,8 @@ public class Impiegato {
 		String dataAssunzioneString = dataNascita != null ? new SimpleDateFormat("dd/MM/yyyy").format(dataAssunzione)
 				: " N.D.";
 
-		return "User [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", dataNascita="+ dataNascitaString +", dataAssunzione="+ dataAssunzioneString +"]";
+		return "User [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale
+				+ ", dataNascita=" + dataNascitaString + ", dataAssunzione=" + dataAssunzioneString + ", compagnia="
+				+ compagnia + "]";
 	}
 }

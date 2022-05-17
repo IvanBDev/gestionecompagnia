@@ -8,10 +8,8 @@ import it.prova.gestionecompagnia.model.Compagnia;
 
 public interface CompagniaDAO extends IBaseDAO<Compagnia>{
 	
-	public List<Compagnia> findAllWhereDateCreatedGreaterThan(Date dateCreatedInput) throws Exception;
-	public List<Compagnia> findAllByCognome(String cognomeInput) throws Exception;
-	public List<Compagnia> findAllByLoginIniziaCon(String caratteriInizialiInput) throws Exception;
-	public Compagnia findByLoginAndPassword(String loginInput, String passwordInput) throws Exception;
-	public List<Compagnia> findAllByPasswordIsNull() throws Exception;
+	public List<Compagnia> findAllByDataAssunzioneMaggioreDi(Date dataInput) throws Exception;
+	public List<Compagnia> findAllByRagioneSocialeContiene(String stringaInput) throws Exception;
+	public List<Compagnia> findAllCodiceFiscaleImpiegatoContiene(String codiceFiscale) throws Exception;
 	
 }
