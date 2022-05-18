@@ -40,9 +40,12 @@ public class TestGestioneCompagnia {
 			//testUpdateImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
 			
 			//testEliminaCompagnia(compagniaDAOInstance, impiegatoDAOInstance);
-			testDeleteImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
+			//testDeleteImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
 			System.out.println("Nella tabella Compagnia ci sono: "+ compagniaDAOInstance.list().size() +" elementi");
 			System.out.println("Nella tabella Impiegato ci sono: "+ impiegatoDAOInstance.list().size() +" elementi");
+			
+			//testFindAllByDataAssunzioneMaggioreDi(compagniaDAOInstance);
+			testFindAllByRagioneSociale(compagniaDAOInstance);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,9 +201,38 @@ public class TestGestioneCompagnia {
 		System.out.println("---------------------testDeleteImpiegato: Fine---------------------------------------");
 	}
 	
+	public static void testFindAllByDataAssunzioneMaggioreDi(CompagniaDAO compagniaDAOInstance) throws Exception{
+		System.out.println("---------------------testFindAllByDataAssunzioneMaggioreDi: Inizio---------------------------------------");
+		
+		Date dataPerConfronto = null;
+		try {
+			dataPerConfronto = new SimpleDateFormat("dd/MM/yyyy").parse("05/05/2005");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		List<Compagnia> listaCompagnie = compagniaDAOInstance.findAllByDataAssunzioneMaggioreDi(dataPerConfronto);
+		for (Compagnia compagniaItem : listaCompagnie) {
+			System.out.println(compagniaItem);
+		}
+		
+		System.out.println("---------------------testFindAllByDataAssunzioneMaggioreDi: Fine---------------------------------------");
+	}
 	
-	
-	
+	public static void testFindAllByRagioneSociale(CompagniaDAO compagniaDAOInstance) throws Exception{
+		System.out.println("---------------------testFindAllByRagioneSociale: Inizio---------------------------------------");
+		
+		String ricercaPerRagioneSociale = "t";
+		
+		List<Compagnia> listaCompagnia = compagniaDAOInstance.findAllByRagioneSocialeContiene(ricercaPerRagioneSociale);
+		
+		for (Compagnia compagniaItem : listaCompagnia) {
+			System.out.println(compagniaItem);
+		}
+		
+		System.out.println("---------------------testFindAllByRagioneSociale: Fine---------------------------------------");
+	}
 	
 	
 	

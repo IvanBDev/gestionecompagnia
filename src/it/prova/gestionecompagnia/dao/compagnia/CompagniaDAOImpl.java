@@ -195,13 +195,71 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 	@Override
 	public List<Compagnia> findAllByDataAssunzioneMaggioreDi(java.util.Date dataInput) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		List<Compagnia> result = new ArrayList<Compagnia>();
+		
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+		
+		if(dataInput == null) {
+			throw new RuntimeException("Valore di input non valido");
+		}
+		
+		try (PreparedStatement ps = connection.prepareStatement("SELECT c.* FROM compagnia c INNER JOIN impiegato i ON c.id = i.id_compagnia WHERE i.dataAssunzione > ? GROUP By c.ragioneSociale")) {
+			
+			ps.setDate(1, new java.sql.Date(dataInput.getTime()));
+		try(ResultSet rs = ps.executeQuery()){
+			while(rs.next()) {
+				Compagnia compagniaTemp = new Compagnia();
+				compagniaTemp.setId(rs.getLong("c.id"));
+				compagniaTemp.setRagioneSociale(rs.getString("c.ragioneSociale"));
+				compagniaTemp.setFattualeAnnuo(rs.getInt("c.fattualeAnnuo"));
+				compagniaTemp.setDataFondazione(rs.getDate("c.dataFondazione"));
+				
+				result.add(compagniaTemp);
+			}
+		}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return result;
 	}
 
 	@Override
 	public List<Compagnia> findAllByRagioneSocialeContiene(String stringaInput) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<Compagnia> result = new ArrayList<Compagnia>();
+		
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+		
+		if(stringaInput == null || stringaInput.isBlank()) 
+			throw new RuntimeException("Valore di input non valido");
+		
+try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM compagnia c WHERE c.ragioneSociale LIKE ? ;")) {
+			
+			ps.setString(1, "%" + stringaInput + "%");
+		try(ResultSet rs = ps.executeQuery()){
+			while(rs.next()) {
+				Compagnia compagniaTemp = new Compagnia();
+				compagniaTemp.setId(rs.getLong("c.id"));
+				compagniaTemp.setRagioneSociale(rs.getString("c.ragioneSociale"));
+				compagniaTemp.setFattualeAnnuo(rs.getInt("c.fattualeAnnuo"));
+				compagniaTemp.setDataFondazione(rs.getDate("c.dataFondazione"));
+				
+				result.add(compagniaTemp);
+			}
+		}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return result;
 	}
 
 	@Override
