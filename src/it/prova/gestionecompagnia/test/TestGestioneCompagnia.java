@@ -19,43 +19,44 @@ public class TestGestioneCompagnia {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		CompagniaDAO compagniaDAOInstance = null;
 		ImpiegatoDAO impiegatoDAOInstance = null;
-		
+
 		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
 			// ecco chi 'inietta' la connection: il chiamante
 			compagniaDAOInstance = new CompagniaDAOImpl(connection);
 			impiegatoDAOInstance = new ImpiegatoDAOImpl(connection);
-			
-			System.out.println("Nella tabella Compagnia ci sono: "+ compagniaDAOInstance.list().size() +" elementi");
-			System.out.println("Nella tabella Impiegato ci sono: "+ impiegatoDAOInstance.list().size() +" elementi");
-			
-			//testInsertCompagnia(compagniaDAOInstance);
-			//testInsertImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
-			System.out.println("Nella tabella Compagnia ci sono: "+ compagniaDAOInstance.list().size() +" elementi");
-			System.out.println("Nella tabella Impiegato ci sono: "+ impiegatoDAOInstance.list().size() +" elementi");
-			
-			//testUpdateCompagnia(compagniaDAOInstance);
-			//testUpdateImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
-			
-			//testEliminaCompagnia(compagniaDAOInstance, impiegatoDAOInstance);
-			//testDeleteImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
-			System.out.println("Nella tabella Compagnia ci sono: "+ compagniaDAOInstance.list().size() +" elementi");
-			System.out.println("Nella tabella Impiegato ci sono: "+ impiegatoDAOInstance.list().size() +" elementi");
-			
-			//testFindAllByDataAssunzioneMaggioreDi(compagniaDAOInstance);
-			testFindAllByRagioneSociale(compagniaDAOInstance);
+
+			System.out.println("Nella tabella Compagnia ci sono: " + compagniaDAOInstance.list().size() + " elementi");
+			System.out.println("Nella tabella Impiegato ci sono: " + impiegatoDAOInstance.list().size() + " elementi");
+
+			// testInsertCompagnia(compagniaDAOInstance);
+			// testInsertImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
+			System.out.println("Nella tabella Compagnia ci sono: " + compagniaDAOInstance.list().size() + " elementi");
+			System.out.println("Nella tabella Impiegato ci sono: " + impiegatoDAOInstance.list().size() + " elementi");
+
+			// testUpdateCompagnia(compagniaDAOInstance);
+			// testUpdateImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
+
+			// testEliminaCompagnia(compagniaDAOInstance, impiegatoDAOInstance);
+			// testDeleteImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
+			System.out.println("Nella tabella Compagnia ci sono: " + compagniaDAOInstance.list().size() + " elementi");
+			System.out.println("Nella tabella Impiegato ci sono: " + impiegatoDAOInstance.list().size() + " elementi");
+
+			// testFindAllByDataAssunzioneMaggioreDi(compagniaDAOInstance);
+			//testFindAllByRagioneSociale(compagniaDAOInstance);
+			testFindAllByCodiceFiscaleContiene(compagniaDAOInstance);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	public static void testInsertCompagnia(CompagniaDAO compagniaDAOInstance) throws Exception{
+
+	public static void testInsertCompagnia(CompagniaDAO compagniaDAOInstance) throws Exception {
 		System.out.println("---------------------testInsertCompagnia: Inizio---------------------------------------");
-		
+
 		Date dataFondazioneString = null;
 		try {
 			dataFondazioneString = new SimpleDateFormat("dd/MM/yyyy").parse("21/09/1980");
@@ -63,19 +64,19 @@ public class TestGestioneCompagnia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		int quantiElementiInseriti = compagniaDAOInstance
 				.insert(new Compagnia("Power Star", 2700000, dataFondazioneString));
 		if (quantiElementiInseriti < 1)
 			throw new RuntimeException("testInsertCompagnia : FAILED");
-		
-		
+
 		System.out.println("---------------------testInsertCompagnia: Fine---------------------------------------");
 	}
-	
-	public static void testInsertImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance) throws Exception{
+
+	public static void testInsertImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)
+			throws Exception {
 		System.out.println("---------------------testInsertImpiegato: Inizio---------------------------------------");
-		
+
 		Date dataNascitaString = null;
 		Date dataAssunzioneString = null;
 		try {
@@ -85,50 +86,50 @@ public class TestGestioneCompagnia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<Compagnia> elencoCompagniePresenti = compagniaDAOInstance.list();
 		if (elencoCompagniePresenti.size() < 1)
 			throw new RuntimeException("testInsertArticolo : FAILED, non ci sono negozi sul DB");
-		
+
 		Compagnia compagnie = elencoCompagniePresenti.get(1);
-		
-		int quantiElementiInseriti = impiegatoDAOInstance
-				.insert(new Impiegato("Flavio", "Marra", "MRAFVL21A71O479H", dataNascitaString, dataAssunzioneString, compagnie));
+
+		int quantiElementiInseriti = impiegatoDAOInstance.insert(new Impiegato("Flavio", "Marra", "MRAFVL21A71O479H",
+				dataNascitaString, dataAssunzioneString, compagnie));
 		if (quantiElementiInseriti < 1)
 			throw new RuntimeException("testInsertImpiegato : FAILED");
-		
+
 		System.out.println("---------------------testInsertImpiegato: Fine---------------------------------------");
 	}
-	
-	public static void testUpdateCompagnia(CompagniaDAO compagniaDAOInstance) throws Exception{
+
+	public static void testUpdateCompagnia(CompagniaDAO compagniaDAOInstance) throws Exception {
 		System.out.println("---------------------testUpdateCompagnia: Inizio---------------------------------------");
-		
-		Date modificaDataString= null;
+
+		Date modificaDataString = null;
 		try {
 			modificaDataString = new SimpleDateFormat("dd/MM/yyyy").parse("18/06/2000");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Compagnia compagniaUpdate = new Compagnia(1L, "Team Solving s.p.a", 3200000, modificaDataString);
-		
-		if(compagniaDAOInstance.update(compagniaUpdate) != 0) {
+
+		if (compagniaDAOInstance.update(compagniaUpdate) != 0) {
 			System.out.println("Compagnia modificata con successo!");
-		}
-		else {
+		} else {
 			System.out.println("Si e' verificcato un problema");
 		}
-		
+
 		System.out.println("---------------------testUpdateCompagnia: Fine---------------------------------------");
 	}
-	
-	public static void testUpdateImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance) throws Exception{
+
+	public static void testUpdateImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)
+			throws Exception {
 		System.out.println("---------------------testUpdateImpiegato: Inizio---------------------------------------");
-		
+
 		List<Compagnia> listaCompagnia = compagniaDAOInstance.list();
 		Compagnia idCompagnia = listaCompagnia.get(1);
-		
+
 		Date dataNascitaString = null;
 		Date dataAssunzioneString = null;
 		try {
@@ -138,48 +139,49 @@ public class TestGestioneCompagnia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Impiegato impiegatoDaModificare = new Impiegato(5L, "Mario", "Rossi", "RSOMRA21R70A436E", dataNascitaString, dataAssunzioneString, idCompagnia);
-		if(impiegatoDAOInstance.update(impiegatoDaModificare) != 0) {
+
+		Impiegato impiegatoDaModificare = new Impiegato(5L, "Mario", "Rossi", "RSOMRA21R70A436E", dataNascitaString,
+				dataAssunzioneString, idCompagnia);
+		if (impiegatoDAOInstance.update(impiegatoDaModificare) != 0) {
 			System.out.println("Impiegato modificato con successo!");
-		}
-		else {
+		} else {
 			System.out.println("Si e' verificcato un problema");
 		}
-		
+
 		System.out.println("---------------------testUpdateImpiegato: Fine---------------------------------------");
 	}
-	
-	public static void testEliminaCompagnia (CompagniaDAO compagniaDAOInstance, ImpiegatoDAO impiegatoDAOInstance) throws Exception{
+
+	public static void testEliminaCompagnia(CompagniaDAO compagniaDAOInstance, ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
 		System.out.println("---------------------testEliminaCompagnia: Inizio---------------------------------------");
-		
+
 		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
 		Long idCompagniaDaEliminare = listaCompagnie.get(2).getId();
-		
-		if(impiegatoDAOInstance.impiegatiPresentiInCompagnia(idCompagniaDaEliminare)) {
+
+		if (impiegatoDAOInstance.impiegatiPresentiInCompagnia(idCompagniaDaEliminare)) {
 			System.out.println("Impiegati presenti in compagnia. Si prega di eliminarli prima della cancellazione.");
 			throw new RuntimeException();
-		}
-		else {
+		} else {
 			System.out.println("Non ci sono Impiegati in Compagnia, si procede alla cancellazione!");
 			Compagnia deleteCompagnia = listaCompagnie.get(2);
-			if(compagniaDAOInstance.delete(deleteCompagnia) != 0 && deleteCompagnia.getId() == idCompagniaDaEliminare) {
+			if (compagniaDAOInstance.delete(deleteCompagnia) != 0
+					&& deleteCompagnia.getId() == idCompagniaDaEliminare) {
 				System.out.println("La Compagnia selezionata e' stata eliminata!");
-			}
-			else {
+			} else {
 				System.out.println("Errore durante la selezione della compagnia da eliminare");
 			}
 		}
-		
+
 		System.out.println("---------------------testEliminaCompagnia: Fine---------------------------------------");
 	}
-	
-	public static void testDeleteImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)throws Exception{
+
+	public static void testDeleteImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)
+			throws Exception {
 		System.out.println("---------------------testDeleteImpiegato: Inizio---------------------------------------");
-		
+
 		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
 		Compagnia id_compagnia = listaCompagnie.get(1);
-		
+
 		Date dataNascitaString = null;
 		Date dataAssunzioneString = null;
 		try {
@@ -189,21 +191,22 @@ public class TestGestioneCompagnia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Impiegato impiegatoDaLicenziare = new Impiegato(5L, "Mario", "Rossi", "RSOMRA21R70A436E", dataNascitaString, dataAssunzioneString, id_compagnia);
-		
-		if(impiegatoDAOInstance.delete(impiegatoDaLicenziare) != 0) {
+		Impiegato impiegatoDaLicenziare = new Impiegato(5L, "Mario", "Rossi", "RSOMRA21R70A436E", dataNascitaString,
+				dataAssunzioneString, id_compagnia);
+
+		if (impiegatoDAOInstance.delete(impiegatoDaLicenziare) != 0) {
 			System.out.println("Impiegato licenziato");
-		}
-		else {
+		} else {
 			System.out.println("Si e' verificato un errore");
 		}
-		
+
 		System.out.println("---------------------testDeleteImpiegato: Fine---------------------------------------");
 	}
-	
-	public static void testFindAllByDataAssunzioneMaggioreDi(CompagniaDAO compagniaDAOInstance) throws Exception{
-		System.out.println("---------------------testFindAllByDataAssunzioneMaggioreDi: Inizio---------------------------------------");
-		
+
+	public static void testFindAllByDataAssunzioneMaggioreDi(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println(
+				"---------------------testFindAllByDataAssunzioneMaggioreDi: Inizio---------------------------------------");
+
 		Date dataPerConfronto = null;
 		try {
 			dataPerConfronto = new SimpleDateFormat("dd/MM/yyyy").parse("05/05/2005");
@@ -211,105 +214,46 @@ public class TestGestioneCompagnia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<Compagnia> listaCompagnie = compagniaDAOInstance.findAllByDataAssunzioneMaggioreDi(dataPerConfronto);
 		for (Compagnia compagniaItem : listaCompagnie) {
 			System.out.println(compagniaItem);
 		}
-		
-		System.out.println("---------------------testFindAllByDataAssunzioneMaggioreDi: Fine---------------------------------------");
+
+		System.out.println(
+				"---------------------testFindAllByDataAssunzioneMaggioreDi: Fine---------------------------------------");
 	}
-	
-	public static void testFindAllByRagioneSociale(CompagniaDAO compagniaDAOInstance) throws Exception{
-		System.out.println("---------------------testFindAllByRagioneSociale: Inizio---------------------------------------");
-		
+
+	public static void testFindAllByRagioneSociale(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println(
+				"---------------------testFindAllByRagioneSociale: Inizio---------------------------------------");
+
 		String ricercaPerRagioneSociale = "t";
-		
+
 		List<Compagnia> listaCompagnia = compagniaDAOInstance.findAllByRagioneSocialeContiene(ricercaPerRagioneSociale);
-		
+
 		for (Compagnia compagniaItem : listaCompagnia) {
 			System.out.println(compagniaItem);
 		}
-		
-		System.out.println("---------------------testFindAllByRagioneSociale: Fine---------------------------------------");
+
+		System.out.println(
+				"---------------------testFindAllByRagioneSociale: Fine---------------------------------------");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public static void testFindAllByCodiceFiscaleContiene(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println(
+				"---------------------testFindAllByCodiceFiscaleContiene: Inizio---------------------------------------");
+
+		String ricercaTramiteCodiceFiscale = "A";
+
+		List<Compagnia> listaCompagnia = compagniaDAOInstance.findAllCodiceFiscaleImpiegatoContiene(ricercaTramiteCodiceFiscale);
+
+		for (Compagnia compagniaItem : listaCompagnia) {
+			System.out.println(compagniaItem);
+		}
+
+		System.out.println(
+				"---------------------testFindAllByCodiceFiscaleContiene: Fine---------------------------------------");
+	}
 
 }
