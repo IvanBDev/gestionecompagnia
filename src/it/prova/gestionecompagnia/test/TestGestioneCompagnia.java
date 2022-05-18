@@ -58,7 +58,8 @@ public class TestGestioneCompagnia {
 
 			//testFindAllByCompagnia(impiegatoDAOInstance, compagniaDAOInstance);
 			//testCountByDataFondazioneCompagniaGreaterThan(impiegatoDAOInstance);
-			testFindAllByCompagniaConFatturatoMaggioreDi(impiegatoDAOInstance);
+			//testFindAllByCompagniaConFatturatoMaggioreDi(impiegatoDAOInstance);
+			testFindAllErroriAssunzione(impiegatoDAOInstance);
 
 			System.out.println(
 					"--------------------Fine test metodi unici su Impiegato-----------------------------------");
@@ -321,6 +322,29 @@ public class TestGestioneCompagnia {
 
 		System.out.println(
 				"---------------------testFindAllByCompagniaConFatturatoMaggioreDi: Fine---------------------------------------");
+	}
+	
+	public static void testFindAllErroriAssunzione(ImpiegatoDAO impiegatoDAOInstance) throws Exception{
+		System.out.println(
+				"---------------------testFindAllErroriAssunzione: Fine---------------------------------------");
+		
+		List<Impiegato> listaImpiegati = impiegatoDAOInstance.findAllErroriAssunzione();
+		if(listaImpiegati.size()>0) {
+			System.out.println("Ci sono degli impiegati con errori nelle assunzioni");
+			for (Impiegato impiegatoItem : listaImpiegati) {
+				System.out.println(impiegatoItem);
+			}
+		}
+		else {
+			System.out.println("Tutti gli impiegati hanno assunzioni corrette");
+		}
+		
+		
+		
+		
+		
+		System.out.println(
+				"---------------------testFindAllErroriAssunzione: Fine---------------------------------------");
 	}
 
 }
