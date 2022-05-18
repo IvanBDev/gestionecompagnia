@@ -39,7 +39,10 @@ public class TestGestioneCompagnia {
 			//testUpdateCompagnia(compagniaDAOInstance);
 			//testUpdateImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
 			
-			
+			//testEliminaCompagnia(compagniaDAOInstance, impiegatoDAOInstance);
+			testDeleteImpiegato(impiegatoDAOInstance, compagniaDAOInstance);
+			System.out.println("Nella tabella Compagnia ci sono: "+ compagniaDAOInstance.list().size() +" elementi");
+			System.out.println("Nella tabella Impiegato ci sono: "+ impiegatoDAOInstance.list().size() +" elementi");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,10 +147,56 @@ public class TestGestioneCompagnia {
 		System.out.println("---------------------testUpdateImpiegato: Fine---------------------------------------");
 	}
 	
+	public static void testEliminaCompagnia (CompagniaDAO compagniaDAOInstance, ImpiegatoDAO impiegatoDAOInstance) throws Exception{
+		System.out.println("---------------------testEliminaCompagnia: Inizio---------------------------------------");
+		
+		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
+		Long idCompagniaDaEliminare = listaCompagnie.get(2).getId();
+		
+		if(impiegatoDAOInstance.impiegatiPresentiInCompagnia(idCompagniaDaEliminare)) {
+			System.out.println("Impiegati presenti in compagnia. Si prega di eliminarli prima della cancellazione.");
+			throw new RuntimeException();
+		}
+		else {
+			System.out.println("Non ci sono Impiegati in Compagnia, si procede alla cancellazione!");
+			Compagnia deleteCompagnia = listaCompagnie.get(2);
+			if(compagniaDAOInstance.delete(deleteCompagnia) != 0 && deleteCompagnia.getId() == idCompagniaDaEliminare) {
+				System.out.println("La Compagnia selezionata e' stata eliminata!");
+			}
+			else {
+				System.out.println("Errore durante la selezione della compagnia da eliminare");
+			}
+		}
+		
+		System.out.println("---------------------testEliminaCompagnia: Fine---------------------------------------");
+	}
 	
-	
-	
-	
+	public static void testDeleteImpiegato(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)throws Exception{
+		System.out.println("---------------------testDeleteImpiegato: Inizio---------------------------------------");
+		
+		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
+		Compagnia id_compagnia = listaCompagnie.get(1);
+		
+		Date dataNascitaString = null;
+		Date dataAssunzioneString = null;
+		try {
+			dataNascitaString = new SimpleDateFormat("dd/MM/yyyy").parse("19/06/1970");
+			dataAssunzioneString = new SimpleDateFormat("dd/MM/yyyy").parse("11/07/2009");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Impiegato impiegatoDaLicenziare = new Impiegato(5L, "Mario", "Rossi", "RSOMRA21R70A436E", dataNascitaString, dataAssunzioneString, id_compagnia);
+		
+		if(impiegatoDAOInstance.delete(impiegatoDaLicenziare) != 0) {
+			System.out.println("Impiegato licenziato");
+		}
+		else {
+			System.out.println("Si e' verificato un errore");
+		}
+		
+		System.out.println("---------------------testDeleteImpiegato: Fine---------------------------------------");
+	}
 	
 	
 	

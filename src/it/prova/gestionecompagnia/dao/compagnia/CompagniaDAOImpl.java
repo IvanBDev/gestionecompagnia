@@ -56,7 +56,7 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 			throw new Exception("Valore di input non ammesso.");
 
 		Compagnia result = null;
-		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE id=?")) {
+		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM compagnia WHERE id=?")) {
 
 			ps.setLong(1, idInput);
 			try (ResultSet rs = ps.executeQuery()) {
@@ -209,6 +209,7 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 	
 	

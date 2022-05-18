@@ -83,7 +83,7 @@ public class Compagnia {
 		String dataFondazioneString = dataFondazione != null ? new SimpleDateFormat("dd/MM/yyyy").format(dataFondazione)
 				: " N.D.";
 
-		return "User [id=" + id + ", ragioneSociale=" + ragioneSociale + ", fattualeAnnuo=" + fattualeAnnuo + ", dataFondazione=" + dataFondazioneString + ", impiegati="+ impiegato +"]";
+		return "Compagnia [id=" + id + ", ragioneSociale=" + ragioneSociale + ", fattualeAnnuo=" + fattualeAnnuo + ", dataFondazione=" + dataFondazioneString +"]";
 	}
 	
 	

@@ -102,7 +102,7 @@ public class Impiegato {
 		String dataAssunzioneString = dataNascita != null ? new SimpleDateFormat("dd/MM/yyyy").format(dataAssunzione)
 				: " N.D.";
 
-		return "User [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale
+		return "Impiegato [nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale
 				+ ", dataNascita=" + dataNascitaString + ", dataAssunzione=" + dataAssunzioneString + ", compagnia="
 				+ compagnia + "]";
 	}

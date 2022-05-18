@@ -235,6 +235,43 @@ public class ImpiegatoDAOImpl  extends AbstractMySQLDAO implements ImpiegatoDAO{
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		public boolean impiegatiPresentiInCompagnia(Long compagniaDaElimiare) throws Exception {
+			// TODO Auto-generated method stub
+			
+			List<Impiegato> result = new ArrayList<Impiegato>();
+			
+			try (PreparedStatement ps = connection.prepareStatement(
+					"SELECT i.* FROM impiegato i INNER JOIN compagnia c ON i.id_compagnia = c.id WHERE c.id = ?;")) {
+				ps.setLong(1, compagniaDaElimiare);
+				
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						Impiegato impiegatoTemp = new Impiegato();
+						impiegatoTemp.setId(rs.getLong("id"));
+						impiegatoTemp.setNome(rs.getString("nome"));
+						impiegatoTemp.setCognome(rs.getString("cognome"));
+						impiegatoTemp.setCodiceFiscale(rs.getString("codiceFiscale"));
+						impiegatoTemp.setDataNascita(rs.getDate("dataNascita"));
+						impiegatoTemp.setDataAssunzione(rs.getDate("dataAssunzione"));
+						impiegatoTemp.setId(rs.getLong("id_compagnia"));
+						
+						result.add(impiegatoTemp);
+					} 
+				} // niente catch qui
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+			
+			if(result.size() > 0) {
+				return true;
+			}
+			
+			return false;
+		}
 		
 		
 		
