@@ -44,9 +44,20 @@ public class TestGestioneCompagnia {
 			System.out.println("Nella tabella Compagnia ci sono: " + compagniaDAOInstance.list().size() + " elementi");
 			System.out.println("Nella tabella Impiegato ci sono: " + impiegatoDAOInstance.list().size() + " elementi");
 
+			System.out.println("--------------------Inizio test metodi unici su Compagnia-----------------------------------");
+			
 			// testFindAllByDataAssunzioneMaggioreDi(compagniaDAOInstance);
 			//testFindAllByRagioneSociale(compagniaDAOInstance);
-			testFindAllByCodiceFiscaleContiene(compagniaDAOInstance);
+			//testFindAllByCodiceFiscaleContiene(compagniaDAOInstance);
+			
+			System.out.println("--------------------Fine test metodi unici su Compagnia-----------------------------------");
+			System.out.println("--------------------Inizio test metodi unici su Impiegato-----------------------------------");
+			
+			testFindAllByCompagnia(impiegatoDAOInstance, compagniaDAOInstance);
+			
+			
+			
+			System.out.println("--------------------Fine test metodi unici su Impiegato-----------------------------------");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -252,8 +263,86 @@ public class TestGestioneCompagnia {
 			System.out.println(compagniaItem);
 		}
 
-		System.out.println(
-				"---------------------testFindAllByCodiceFiscaleContiene: Fine---------------------------------------");
+		System.out.println("---------------------testFindAllByCodiceFiscaleContiene: Fine---------------------------------------");
 	}
+	
+	public static void testFindAllByCompagnia(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance) throws Exception{
+		System.out.println("---------------------testFindAllByCompagnia: Inizio---------------------------------------");
+		
+		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
+		Compagnia compagniaSelezionata = listaCompagnie.get(1);
+		
+		List<Impiegato> listaImpiegati = impiegatoDAOInstance.findAllByCompagnia(compagniaSelezionata);
+		for (Impiegato impiegatoItem : listaImpiegati) {
+			System.out.println(impiegatoItem);
+		}
+		
+		
+		System.out.println("---------------------testFindAllByCompagnia: Fine---------------------------------------");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
