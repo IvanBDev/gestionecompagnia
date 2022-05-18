@@ -44,20 +44,23 @@ public class TestGestioneCompagnia {
 			System.out.println("Nella tabella Compagnia ci sono: " + compagniaDAOInstance.list().size() + " elementi");
 			System.out.println("Nella tabella Impiegato ci sono: " + impiegatoDAOInstance.list().size() + " elementi");
 
-			System.out.println("--------------------Inizio test metodi unici su Compagnia-----------------------------------");
-			
+			System.out.println(
+					"--------------------Inizio test metodi unici su Compagnia-----------------------------------");
+
 			// testFindAllByDataAssunzioneMaggioreDi(compagniaDAOInstance);
-			//testFindAllByRagioneSociale(compagniaDAOInstance);
-			//testFindAllByCodiceFiscaleContiene(compagniaDAOInstance);
-			
-			System.out.println("--------------------Fine test metodi unici su Compagnia-----------------------------------");
-			System.out.println("--------------------Inizio test metodi unici su Impiegato-----------------------------------");
-			
-			testFindAllByCompagnia(impiegatoDAOInstance, compagniaDAOInstance);
-			
-			
-			
-			System.out.println("--------------------Fine test metodi unici su Impiegato-----------------------------------");
+			// testFindAllByRagioneSociale(compagniaDAOInstance);
+			// testFindAllByCodiceFiscaleContiene(compagniaDAOInstance);
+
+			System.out.println(
+					"--------------------Fine test metodi unici su Compagnia-----------------------------------");
+			System.out.println(
+					"--------------------Inizio test metodi unici su Impiegato-----------------------------------");
+
+			//testFindAllByCompagnia(impiegatoDAOInstance, compagniaDAOInstance);
+			testCountByDataFondazioneCompagniaGreaterThan(impiegatoDAOInstance);
+
+			System.out.println(
+					"--------------------Fine test metodi unici su Impiegato-----------------------------------");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -257,92 +260,50 @@ public class TestGestioneCompagnia {
 
 		String ricercaTramiteCodiceFiscale = "A";
 
-		List<Compagnia> listaCompagnia = compagniaDAOInstance.findAllCodiceFiscaleImpiegatoContiene(ricercaTramiteCodiceFiscale);
+		List<Compagnia> listaCompagnia = compagniaDAOInstance
+				.findAllCodiceFiscaleImpiegatoContiene(ricercaTramiteCodiceFiscale);
 
 		for (Compagnia compagniaItem : listaCompagnia) {
 			System.out.println(compagniaItem);
 		}
 
-		System.out.println("---------------------testFindAllByCodiceFiscaleContiene: Fine---------------------------------------");
+		System.out.println(
+				"---------------------testFindAllByCodiceFiscaleContiene: Fine---------------------------------------");
 	}
-	
-	public static void testFindAllByCompagnia(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance) throws Exception{
-		System.out.println("---------------------testFindAllByCompagnia: Inizio---------------------------------------");
-		
+
+	public static void testFindAllByCompagnia(ImpiegatoDAO impiegatoDAOInstance, CompagniaDAO compagniaDAOInstance)
+			throws Exception {
+		System.out
+				.println("---------------------testFindAllByCompagnia: Inizio---------------------------------------");
+
 		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
 		Compagnia compagniaSelezionata = listaCompagnie.get(1);
-		
+
 		List<Impiegato> listaImpiegati = impiegatoDAOInstance.findAllByCompagnia(compagniaSelezionata);
 		for (Impiegato impiegatoItem : listaImpiegati) {
 			System.out.println(impiegatoItem);
 		}
-		
-		
+
 		System.out.println("---------------------testFindAllByCompagnia: Fine---------------------------------------");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public static void testCountByDataFondazioneCompagniaGreaterThan(ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
+		System.out.println(
+				"---------------------testCountByDataFondazioneCompagniaGreaterThan: Inizio---------------------------------------");
+
+		Date dataPerConfronto = null;
+		try {
+			dataPerConfronto = new SimpleDateFormat("dd/MM/yyyy").parse("05/05/2000");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("Il numero di impiegati che lavorano nella compagnia dalla data inserita sono:" + impiegatoDAOInstance.countByDataFondazioneCompagniaGreaterThan(dataPerConfronto));
+
+		System.out.println(
+				"---------------------testCountByDataFondazioneCompagniaGreaterThan: Fine---------------------------------------");
+	}
 
 }

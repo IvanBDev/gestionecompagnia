@@ -238,7 +238,6 @@ public class ImpiegatoDAOImpl extends AbstractMySQLDAO implements ImpiegatoDAO {
 					impiegatoTemp.setCodiceFiscale(rs.getString("codiceFiscale"));
 					impiegatoTemp.setDataNascita(rs.getDate("dataNascita"));
 					impiegatoTemp.setDataAssunzione(rs.getDate("dataAssunzione"));
-					
 					result.add(impiegatoTemp);
 				}
 			}
@@ -254,7 +253,30 @@ public class ImpiegatoDAOImpl extends AbstractMySQLDAO implements ImpiegatoDAO {
 	@Override
 	public int countByDataFondazioneCompagniaGreaterThan(java.util.Date dataInput) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+
+		if (dataInput == null) 
+			throw new RuntimeException("Valore di input non valido");
+		
+		try (PreparedStatement ps = connection.prepareStatement(
+				"SELECT i.* FROM impiegato i INNER JOIN compagnia c ON i.id_compagnia = c.id WHERE c.dataFondazione > ? ;")) {
+
+			ps.setDate(1, new java.sql.Date(dataInput.getTime()));
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					count++;
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return count;
 	}
 
 	@Override
