@@ -57,7 +57,8 @@ public class TestGestioneCompagnia {
 					"--------------------Inizio test metodi unici su Impiegato-----------------------------------");
 
 			//testFindAllByCompagnia(impiegatoDAOInstance, compagniaDAOInstance);
-			testCountByDataFondazioneCompagniaGreaterThan(impiegatoDAOInstance);
+			//testCountByDataFondazioneCompagniaGreaterThan(impiegatoDAOInstance);
+			testFindAllByCompagniaConFatturatoMaggioreDi(impiegatoDAOInstance);
 
 			System.out.println(
 					"--------------------Fine test metodi unici su Impiegato-----------------------------------");
@@ -304,6 +305,22 @@ public class TestGestioneCompagnia {
 
 		System.out.println(
 				"---------------------testCountByDataFondazioneCompagniaGreaterThan: Fine---------------------------------------");
+	}
+	
+	public static void testFindAllByCompagniaConFatturatoMaggioreDi(ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
+		System.out.println(
+				"---------------------testFindAllByCompagniaConFatturatoMaggioreDi: Inizio---------------------------------------");
+		
+		int confrontoFatturatoCompagnia = 2000000;
+		List<Impiegato> listaImpiegati = impiegatoDAOInstance.findAllByCompagniaConFatturatoMaggioreDi(confrontoFatturatoCompagnia);
+		
+		for (Impiegato impiegatoItem : listaImpiegati) {
+			System.out.println(impiegatoItem);
+		}
+
+		System.out.println(
+				"---------------------testFindAllByCompagniaConFatturatoMaggioreDi: Fine---------------------------------------");
 	}
 
 }
